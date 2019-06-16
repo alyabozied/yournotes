@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>new note book</title>
+    <link rel="stylesheet" href="./materialize/css/materialize.min.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="" class="brand-logo center">notes</a>
+        </div>
+    </nav>
+    <ul ></ul>
+    <script>
+    const electron=require('electron');
+    const {ipcRenderer}=electron;
+    const ul=document.querySelector('ul');
+    // catch add notes
+    ipcRenderer.on("note:add",function(e,note){
+        const li=document.createElement('li')
+        const noteText=document.createTextNode(note)
+        ul.className='collection';
+        li.className='collection-item';
+        li.appendChild(noteText);
+        ul.appendChild(li);
+    })
+    //clear notes
+    ipcRenderer.on("notes:clear",function(){
+        ul.innerHTML='';
+        ul.className='';
+    });
+    ul.addEventListener('dblclick',removeNote);
+    function removeNote(e){
+        e.target.remove();
+        if(ul.children.length==0)
+        ul.className='';
+    }
+</script>
+</body>
+</html>

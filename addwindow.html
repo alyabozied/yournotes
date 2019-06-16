@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>add note</title>
+    <link rel="stylesheet" href="./materialize/css/materialize.min.css">
+</head>
+<body>
+    <div class="container">
+    <form >
+        <div>
+            <label > enter note</label>
+            <input type="text" id="note" autofocus>
+        </div>
+        <button type="submit" class="btn waves-effect waves-light">
+            add note
+        </button>
+    </form>
+</div>
+<script type="text/javascript">
+const electron=require('electron');
+const {ipcRenderer}=electron;
+const form=document.querySelector('form');
+form.addEventListener('submit',submitForm);
+function submitForm(e){
+    e.preventDefault();
+    const note = document.querySelector('#note').value;
+    ipcRenderer.send('note:add',note);
+}
+</script>
+</body>
+</html>
